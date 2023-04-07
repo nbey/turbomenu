@@ -48,6 +48,7 @@ export default function BuilderContent(props) {
           {
             name: event.target.name.value,
             description: event.target.description.value,
+            hidden: event.target.hidden.value,
             items: [],
           },
         ],
@@ -67,6 +68,7 @@ export default function BuilderContent(props) {
         [i]: {
           name: { $set: event.target.name.value },
           description: { $set: event.target.description.value },
+          hidden: { $set: event.target.hidden.value },
         },
       })
     )
@@ -78,6 +80,7 @@ export default function BuilderContent(props) {
 
   function addItem(sectionIndex, event) {
     event.preventDefault()
+    console.log(event.target);
     setMenu(
       update(menu, {
         [sectionIndex]: {
@@ -88,6 +91,7 @@ export default function BuilderContent(props) {
                   name: event.target.name.value,
                   price: event.target.price.value,
                   description: event.target.description.value,
+                  hidden: event.target.hidden.checked,
                 },
               ],
             }),
@@ -98,6 +102,7 @@ export default function BuilderContent(props) {
 
   function updateItem(sectionIndex, index, event) {
     event.preventDefault()
+    console.log(event.target.hidden.checked);
     setMenu(
       update(menu, {
         [sectionIndex]: {
@@ -106,6 +111,7 @@ export default function BuilderContent(props) {
               name: { $set: event.target.name.value },
               price: { $set: event.target.price.value },
               description: { $set: event.target.description.value },
+              hidden: { $set: event.target.hidden.checked },
             },
           },
         },
@@ -146,6 +152,7 @@ export default function BuilderContent(props) {
               index={index}
               name={item.name}
               description={item.description}
+              hidden={item.hidden}
               items={item.items}
               addItem={addItem}
               updateItem={updateItem}

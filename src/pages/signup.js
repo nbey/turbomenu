@@ -32,7 +32,7 @@ export default function Signup() {
       const snapshot = await menuRef.once("value")
       if (snapshot.exists()) {
         errors.link =
-          "Sorry, that link is already taken. If this is your restaurant, please contact us"
+          "Sorry, that link is already taken. If this is your restaurant, please contact us!"
       }
     }
 

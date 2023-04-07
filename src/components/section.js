@@ -67,6 +67,15 @@ function Section(props) {
               defaultValue={props.firstTime ? "" : props.description}
             />
           </label>
+          <label className={block + "__form-visibility"}>
+            Hidden
+            <input
+              name='hidden'
+              type='checkbox'
+              defaultChecked={props.hidden}
+            />
+            {console.log(props)}
+          </label>
           <div className={block + "__form-buttons"}>
             <button type='submit' className={block + "__form-add"}>
               Save
@@ -128,6 +137,7 @@ function Section(props) {
                   name={item.name}
                   price={item.price}
                   description={item.description}
+                  hidden={item.hidden}
                   updateItem={props.updateItem}
                   deleteItem={props.deleteItem}
                   firstTime={false}

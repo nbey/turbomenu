@@ -11,7 +11,7 @@ import Logo from "../assets/logo.svg"
 export default function BuilderHeader(props) {
   const { turboId } = props
   const block = "header"
-  const link = `https://turbo.menu/${turboId}`
+  const link = `https://turbo-menu-e7a16.web.app/${turboId}`
   const [title, setTitle] = useState("Loading...")
   const [downloadLink, setDownloadLink] = useState("")
   const [userEmail, setUserEmail] = useState("")

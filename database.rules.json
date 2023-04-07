@@ -1,0 +1,14 @@
+{
+  "rules": {
+  	"menus":{
+      ".read": true,
+      ".write": "auth !== false"
+    },
+    "users": {
+      "$uid": {
+        ".read": "$uid === auth.uid",
+        ".write": "$uid === auth.uid"
+      }
+    }
+  }
+}

@@ -59,6 +59,14 @@ function Item(props) {
               defaultValue={props.description}
             />
           </label>
+          <label className={block + "__form-visibility"}>
+            Hidden
+            <input
+              name='hidden'
+              type='checkbox'
+              defaultChecked={props.hidden}
+            />
+          </label>
           <div className={block + "__form-buttons"}>
             <button type='submit' className={block + "__form-add"}>
               Save
@@ -75,7 +83,7 @@ function Item(props) {
           </div>
         </form>
       ) : (
-        <div className={block}>
+        <div className={`${block}${props.hidden ? " hidden" : ''}`}>
           <div className={block + "__left"}>{/* <FaGripVertical /> */}</div>
 
           <div className={block + "__center"}>

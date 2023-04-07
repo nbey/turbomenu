@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react"
 import firebase from "gatsby-plugin-firebase"
 import Logo from "../assets/logo.svg"
 import NotFound from "./notFound"
+import NotSetup from "./notSetup"
 import Meta from "./meta"
 import Footer from "./footer"
 
@@ -18,9 +19,17 @@ export default function Menu(props) {
       if (!snapshot.exists()) {
         setState("notFound")
       } else {
-        setState("loaded")
-        setMenu(snapshot.child("menu").val())
-        setTitle(snapshot.child("title").val())
+        const menu = snapshot.child("menu").val();
+        const title = snapshot.child("title").val();
+
+        setMenu(menu)
+        setTitle(title)
+
+        if (!menu) {
+          setState('notSetup')
+        } else {
+          setState('loaded')
+        }
       }
     })
   }, [props.id])
@@ -43,12 +52,14 @@ export default function Menu(props) {
           </p>
         </div>
       )}
-      {state === "loaded" && (
+      {state === "loaded" && menu && (
         <div>
           <div className={block + "__header"}>
             <div className={block + "__name"}>{title}</div>
             <ul className={block + "__sections"}>
-              {menu.map((section, sectionIndex) => (
+              {menu
+                .filter(s => !s.hidden)
+                .map((section, sectionIndex) => (
                 <button
                   onClick={() => sectionScrollHandler(sectionIndex)}
                   key={sectionIndex}
@@ -62,7 +73,9 @@ export default function Menu(props) {
 
           <div className={`${block}__wrapper`}>
             <div className={block + "__content"}>
-              {menu.map((section, sectionIndex) => (
+              {menu
+                .filter((s) => !s.hidden)
+                .map((section, sectionIndex) => (
                 <div
                   key={sectionIndex}
                   id={sectionIndex}
@@ -73,7 +86,9 @@ export default function Menu(props) {
                     {section.description}
                   </div>
                   {section.items &&
-                    section.items.map((item, itemIndex) => (
+                    section.items
+                    .filter((i) => i.hidden === false)
+                    .map((item, itemIndex) => (
                       <div key={itemIndex} className={block + "__item"}>
                         <div className={block + "__name-price"}>
                           <div className={block + "__itemName"}>
@@ -95,7 +110,8 @@ export default function Menu(props) {
           </div>
         </div>
       )}
-      {state === "notFound" && <NotFound />}
+      { state === "notFound" && <NotFound /> }
+      { state === "notSetup" && <NotSetup title={title} /> }
     </>
   )
 }
